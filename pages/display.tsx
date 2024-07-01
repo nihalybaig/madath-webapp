@@ -1,5 +1,6 @@
 import React from "react";
 import "../app/globals.css";
+import Announcements from "../app/components/Announcements.jsx";
 
 const DisplayComponent = () => {
   return (
@@ -83,11 +84,8 @@ const DisplayComponent = () => {
           <p>SUNSET</p>
         </div>
       </div>
-      <div className="bg-black text-white text-center p-2">
-        <p>
-          Itikaf program has been cancelled due to COVID. || Decision on Eid
-          sala
-        </p>
+      <div className="w-full flex items-center justify-between bg-black text-white">
+        <Announcements />
       </div>
     </div>
   );
