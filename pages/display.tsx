@@ -108,7 +108,7 @@ const DisplayComponent = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between bg-gray-100 items-center h-full p-20">
+      <div className="flex justify-between bg-gray-100 items-center h-full px-20">
         <div className="text-center">
           <p>3:06AM</p>
           <p className="font-bold">FAJR</p>
