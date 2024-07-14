@@ -1,7 +1,7 @@
 import React from "react";
-import "../app/globals.css";
+import "../globals.css";
 import Image from "next/image";
-import Announcements from "../app/components/Announcements.jsx";
+import Announcements from "../components/Announcements.jsx";
 
 const DisplayComponent = () => {
   return (
