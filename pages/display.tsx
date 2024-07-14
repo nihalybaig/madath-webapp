@@ -82,7 +82,7 @@ const DisplayComponent = () => {
 
               <div className="text-center">
                 <div className="text-base font-bold text-black sm:text-lg">
-                  JUMU'AH
+                  JUMU&apos;AH
                 </div>
                 <div className="flex justify-between mt-2 w-full">
                   <div className="text-center">
