@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../app/globals.css";
 import Image from "next/image";
-import Announcements from "../app/components/Announcements.jsx";
+import moment from "moment";
+import { BiTimeFive } from "react-icons/bi";
+import Announcements from "../app/components/Announcements";
+import HijriDateDisplay from "../app/components/HijriDateDisplay";
 
 const DisplayComponent = () => {
+  const [currentTime, setCurrentTime] = useState(null); // Initialize as null
+  const [is24HourFormat, setIs24HourFormat] = useState(true);
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setCurrentTime(moment());
+    }, 1000);
+
+    // Set initial time immediately after the component mounts
+    setCurrentTime(moment());
+
+    return () => clearInterval(timerId);
+  }, []);
+
+  const toggleFormat = () => {
+    setIs24HourFormat(!is24HourFormat);
+  };
+
+  const formatTime = () => {
+    if (is24HourFormat) {
+      return currentTime.format("HH:mm:ss");
+    } else {
+      const formattedTime = currentTime.format("hh:mm:ss A").split(" ");
+      return { time: formattedTime[0], period: formattedTime[1] };
+    }
+  };
+
+  const formattedTime = currentTime ? formatTime() : null;
   return (
     <div className="bg-white flex flex-col justify-between h-screen">
       <div className="flex flex-col sm:flex-col md:flex-row text-white text-sm text-center font-bold">
@@ -52,19 +83,51 @@ const DisplayComponent = () => {
           </div>
           <div className="w-full md:w-3/12 bg-gray-200 text-black mb-2 md:mb-0">
             <div className="flex flex-col p-6">
-              <div className="text-center">
-                <div className="text-xs font-medium text-black sm:text-sm">
-                  SHAWWAL 16, 1441
+              <div className="text-base font-bold text-black sm:text-lg flex flex-col items-center">
+                <div className="flex items-center mr-0 md:mr-6">
+                  <span className="mr-2">Hijri:</span>
+                  <span className="font-medium">
+                    <HijriDateDisplay />
+                  </span>
                 </div>
-                <div className="text-base font-bold text-black sm:text-lg">
-                  MONDAY, JUN 8
+                <div className="flex items-center mt-2">
+                  <span className="mr-2">Date:</span>
+                  <span className="font-medium">
+                    {currentTime && currentTime.format("dddd, MMM D, YYYY")}
+                  </span>
                 </div>
               </div>
               <div className="my-4 w-full border-t-2 border-black"></div>
 
-              <div className="my-4">
-                <div className="text-4xl font-bold text-black sm:text-6xl">
-                  12:40<span className="text-xl sm:text-2xl">PM</span>
+              <div className="my-4 flex items-center justify-center">
+                <div className="text-base font-bold text-black sm:text-lg">
+                  <div className="flex items-center">
+                    <span className="font-bold text-2xl flex items-center">
+                      <span className="text-4xl">
+                        {currentTime &&
+                          (is24HourFormat ? (
+                            <span className="w-28">
+                              {currentTime.format("HH:mm:ss")}
+                            </span>
+                          ) : (
+                            formattedTime && (
+                              <>
+                                <span className="text-4xl">
+                                  {formattedTime.time}
+                                </span>
+                                <span className="text-2xl ml-1">
+                                  {formattedTime.period}
+                                </span>
+                              </>
+                            )
+                          ))}
+                      </span>
+                      <BiTimeFive
+                        className="cursor-pointer text-2xl ml-2"
+                        onClick={toggleFormat}
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
 
