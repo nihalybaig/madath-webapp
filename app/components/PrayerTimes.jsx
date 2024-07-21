@@ -7,21 +7,6 @@ function PrayerTimes({ onPrayerTimeUpdate }) {
   // Context
   const [loaded, data] = useContext(FetchedDataContext);
 
-  useEffect(() => {
-    if (onPrayerTimeUpdate) {
-      const timings = data?.timings || {};
-      const prayerNames = Object.keys(timings);
-      const prayTimes = Object.values(timings);
-      const [remainingTime, nextPray] = useNextPrayer(prayTimes);
-
-      onPrayerTimeUpdate(remainingTime, prayerNames[nextPray]);
-    }
-  }, [data, onPrayerTimeUpdate]);
-
-  if (!loaded) {
-    return <div>Loading...</div>;
-  }
-
   // Get Prayer Time
   const timings = data?.timings || {};
 
@@ -42,6 +27,16 @@ function PrayerTimes({ onPrayerTimeUpdate }) {
   // Get Prayer Times
   const prayTimes = Object.values(timings);
   const [remainingTime, nextPray] = useNextPrayer(prayTimes);
+
+  useEffect(() => {
+    if (onPrayerTimeUpdate && prayTimes.length > 0) {
+      onPrayerTimeUpdate(remainingTime, prayerNames[nextPray]);
+    }
+  }, [remainingTime, nextPray, onPrayerTimeUpdate, prayerNames, prayTimes]);
+
+  if (!loaded) {
+    return <div>Loading...</div>;
+  }
 
   // Prayer Card
   const prayerTimeList = prayerNames.map((p, i) => (
