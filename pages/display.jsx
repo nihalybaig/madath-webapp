@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../app/globals.css";
 import Image from "next/image";
-import moment from "moment";
+import moment, { Moment } from "moment";
 import { BiTimeFive } from "react-icons/bi";
 import Announcements from "../app/components/Announcements";
 import PrayerTimes from "../app/components/PrayerTimes";
@@ -10,8 +10,8 @@ import HijriDateDisplay from "../app/components/HijriDateDisplay";
 import { FetchedDataProvider } from "@/app/contexts/FetchedDataContext";
 
 const DisplayComponent = () => {
-  const [currentTime, setCurrentTime] = useState(null); // Initialize as null
-  const [is24HourFormat, setIs24HourFormat] = useState(true);
+  const [currentTime, setCurrentTime] = useState(); // Initialize as null
+  // const [is24HourFormat, setIs24HourFormat] = useState(true);
 
   // State to hold remaining time and next prayer name
   const [remainingTime, setRemainingTime] = useState("0:00");
@@ -28,20 +28,20 @@ const DisplayComponent = () => {
     return () => clearInterval(timerId);
   }, []);
 
-  const toggleFormat = () => {
-    setIs24HourFormat(!is24HourFormat);
-  };
+  // const toggleFormat = () => {
+  //   setIs24HourFormat(!is24HourFormat);
+  // };
 
-  const formatTime = () => {
-    if (is24HourFormat) {
-      return currentTime.format("HH:mm:ss");
-    } else {
-      const formattedTime = currentTime.format("hh:mm:ss A").split(" ");
-      return { time: formattedTime[0], period: formattedTime[1] };
-    }
-  };
+  // const formatTime = () => {
+  //   if (is24HourFormat) {
+  //     return currentTime?.format("HH:mm:ss");
+  //   } else {
+  //     const formattedTime = currentTime?.format("hh:mm:ss A").split(" ");
+  //     return { time: formattedTime[0], period: formattedTime[1] };
+  //   }
+  // };
 
-  const formattedTime = currentTime ? formatTime() : null;
+  // const formattedTime = currentTime ? formatTime() : null;
 
   // Callback function to update remaining time and next prayer name
   const handlePrayerTimeUpdate = (time, name) => {
@@ -119,28 +119,34 @@ const DisplayComponent = () => {
                     <div className="flex items-center">
                       <span className="font-bold text-2xl flex items-center">
                         <span className="text-4xl">
-                          {currentTime &&
-                            (is24HourFormat ? (
+                          {
+                            currentTime && (
                               <span className="w-28">
                                 {currentTime.format("HH:mm:ss")}
                               </span>
-                            ) : (
-                              formattedTime && (
-                                <>
-                                  <span className="text-4xl">
-                                    {formattedTime.time}
-                                  </span>
-                                  <span className="text-2xl ml-1">
-                                    {formattedTime.period}
-                                  </span>
-                                </>
-                              )
-                            ))}
+                            )
+                            // (is24HourFormat ? (
+                            //   <span className="w-28">
+                            //     {currentTime.format("HH:mm:ss")}
+                            //   </span>
+                            // ) : (
+                            //   formattedTime && (
+                            //     <>
+                            //       <span className="text-4xl">
+                            //         {formattedTime.time}
+                            //       </span>
+                            //       <span className="text-2xl ml-1">
+                            //         {formattedTime.period}
+                            //       </span>
+                            //     </>
+                            //   )
+                            // ))
+                          }
                         </span>
-                        <BiTimeFive
+                        {/* <BiTimeFive
                           className="cursor-pointer text-2xl ml-2"
                           onClick={toggleFormat}
-                        />
+                        /> */}
                       </span>
                     </div>
                   </div>
