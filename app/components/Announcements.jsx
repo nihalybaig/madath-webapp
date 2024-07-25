@@ -23,7 +23,7 @@ function Announcements() {
     }, 3000); // adjust the delay time as needed
 
     return () => clearTimeout(timeoutId);
-  }, [currentIndex]);
+  }, [currentIndex, headlines.length]);
 
   return (
     <>
